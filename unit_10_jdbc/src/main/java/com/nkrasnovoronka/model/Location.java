@@ -9,8 +9,7 @@ public class Location {
     public Location() {
     }
 
-    public Location(int id, String text) {
-        this.id = id;
+    public Location(String text) {
         this.text = text;
     }
 

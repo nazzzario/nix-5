@@ -10,8 +10,7 @@ public class Problem {
     public Problem() {
     }
 
-    public Problem(int id, int fromId, int toId) {
-        this.id = id;
+    public Problem(int fromId, int toId) {
         this.fromId = fromId;
         this.toId = toId;
     }

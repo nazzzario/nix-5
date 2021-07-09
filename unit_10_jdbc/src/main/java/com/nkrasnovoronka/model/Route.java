@@ -11,8 +11,7 @@ public class Route {
     public Route() {
     }
 
-    public Route(int id, int fromId, int toId, int cost) {
-        this.id = id;
+    public Route(int fromId, int toId, int cost) {
         this.fromId = fromId;
         this.toId = toId;
         this.cost = cost;
