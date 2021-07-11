@@ -14,7 +14,7 @@ public class SolutionDAOImpl implements SolutionDAO {
 
     private static final String INSERT_INTO_SOLUTIONS = "INSERT INTO solutions (problem_id, cost) VALUES (?, ?)";
     private static final String SELECT_FROM_SOLUTIONS = "SELECT * FROM solutions";
-    private Connection connection;
+    private final Connection connection;
 
     public SolutionDAOImpl(Connection connection) {
         this.connection = connection;
@@ -30,6 +30,13 @@ public class SolutionDAOImpl implements SolutionDAO {
         } catch (SQLException throwables) {
             log.error("Database exception");
             throw new RuntimeException(throwables);
+        }
+    }
+
+    @Override
+    public void addAllSolutions(List<Solution> allSolutions) {
+        for (Solution s : allSolutions) {
+            addSolution(s);
         }
     }
 

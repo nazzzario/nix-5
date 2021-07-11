@@ -7,6 +7,7 @@ import java.util.List;
 public interface LocationDAO {
 
     List<Location> getAll();
+
     Location getLocationById(int id);
 
 }

@@ -33,6 +33,7 @@ public class RouteDAOImpl implements RouteDAO {
                 route.setId(resultSet.getInt(1));
                 route.setFromId(resultSet.getInt(2));
                 route.setToId(resultSet.getInt(3));
+                route.setCost(resultSet.getInt(4));
                 allRouts.add(route);
             }
             log.info("Get {} routes from database", allRouts.size());

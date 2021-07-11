@@ -25,7 +25,7 @@ public class ProblemDAOImpl implements ProblemDAO {
     public List<Problem> getAll() {
         List<Problem> allProblems = new ArrayList<>();
         log.info("Getting all problems from database");
-        try (Statement statement = connection.createStatement()){
+        try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(SELECT_FROM_PROBLEMS);
             while (resultSet.next()) {
                 Problem problem = new Problem();
