@@ -5,7 +5,7 @@ import com.nkrasnovoronka.annotation.PropertyKey;
 public class AppProperties {
 
     @PropertyKey("connections.limit")
-    private int connectionLimit;
+    private Integer connectionLimit;
 
     @PropertyKey("name")
     private String name;
