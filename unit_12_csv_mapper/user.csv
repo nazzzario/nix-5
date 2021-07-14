@@ -1,0 +1,4 @@
+id, firstName, lastName, role, active, age
+1, Nazar, Krasnovoronka, ADMIN, true, 23
+2, Rayan, Gosling, MODERATOR, true, 40
+3, Barak, Obama, USER, false, 67
