@@ -23,7 +23,7 @@ import java.util.List;
 
 public class ShortestPathService {
 
-    public static void run() {
+    public void run() {
         try(Connection dbConnection = DbConnection.getDbConnection()){
             LocationDAO locationDAO = new LocationDAOImpl(dbConnection);
             SolutionDAO solutionDAO = new SolutionDAOImpl(dbConnection);
@@ -45,7 +45,7 @@ public class ShortestPathService {
 
     }
 
-    private static List<Solution> findSolutions(int numberOfLocations, int[][] linkMatrix, List<Problem> all) {
+    private List<Solution> findSolutions(int numberOfLocations, int[][] linkMatrix, List<Problem> all) {
         List<Solution> solutionList = new ArrayList<>();
         for (Problem p : all) {
             int id = p.getId();
@@ -55,7 +55,7 @@ public class ShortestPathService {
         return solutionList;
     }
 
-    private static int[][] createLinkMatrix(RouteDAO routeDAO, int numberOfLocations) {
+    private int[][] createLinkMatrix(RouteDAO routeDAO, int numberOfLocations) {
         int[][] linkMatrix = new int[numberOfLocations][numberOfLocations];
         List<Route> routes = routeDAO.getAll();
         for (Route r : routes) {
