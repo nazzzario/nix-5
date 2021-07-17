@@ -22,26 +22,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShortestPathService {
-    private static final Logger log = LoggerFactory.getLogger(ShortestPathService.class);
 
     public static void run() {
-        Connection dbConnection = DbConnection.getDbConnection();
+        try(Connection dbConnection = DbConnection.getDbConnection()){
+            LocationDAO locationDAO = new LocationDAOImpl(dbConnection);
+            SolutionDAO solutionDAO = new SolutionDAOImpl(dbConnection);
+            RouteDAO routeDAO = new RouteDAOImpl(dbConnection);
+            ProblemDAO problemDAO = new ProblemDAOImpl(dbConnection);
 
-        LocationDAO locationDAO = new LocationDAOImpl(dbConnection);
-        SolutionDAO solutionDAO = new SolutionDAOImpl(dbConnection);
-        RouteDAO routeDAO = new RouteDAOImpl(dbConnection);
-        ProblemDAO problemDAO = new ProblemDAOImpl(dbConnection);
+            int numberOfLocations = locationDAO.getAll().size();
 
-        int numberOfLocations = locationDAO.getAll().size();
+            int[][] linkMatrix = createLinkMatrix(routeDAO, numberOfLocations);
 
-        int[][] linkMatrix = createLinkMatrix(routeDAO, numberOfLocations);
+            List<Problem> all = problemDAO.getAll();
 
-        List<Problem> all = problemDAO.getAll();
+            List<Solution> solutionList = findSolutions(numberOfLocations, linkMatrix, all);
+            solutionDAO.addAllSolutions(solutionList);
+        } catch (SQLException throwables) {
+            throw new RuntimeException();
+        }
 
-        List<Solution> solutionList = findSolutions(numberOfLocations, linkMatrix, all);
-        solutionDAO.addAllSolutions(solutionList);
 
-        closeConnection(dbConnection);
     }
 
     private static List<Solution> findSolutions(int numberOfLocations, int[][] linkMatrix, List<Problem> all) {
@@ -65,13 +66,4 @@ public class ShortestPathService {
         return linkMatrix;
     }
 
-    private static void closeConnection(Connection dbConnection) {
-        try {
-            dbConnection.close();
-            log.info("Connection with database is closed");
-        } catch (SQLException throwables) {
-            log.error("Database exception");
-            throw new RuntimeException();
-        }
-    }
 }
