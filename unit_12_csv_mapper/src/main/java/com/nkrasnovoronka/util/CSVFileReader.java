@@ -20,7 +20,7 @@ public class CSVFileReader {
                 csvFile.add(trimSplit);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException();
         }
 
         return csvFile;

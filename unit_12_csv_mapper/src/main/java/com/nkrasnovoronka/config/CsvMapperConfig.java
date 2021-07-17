@@ -28,7 +28,7 @@ public class CsvMapperConfig {
                 objects.add(inst);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException();
         }
         return objects;
     }
