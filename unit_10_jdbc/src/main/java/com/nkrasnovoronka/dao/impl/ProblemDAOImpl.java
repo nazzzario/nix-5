@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ProblemDAOImpl implements ProblemDAO {
     private static final Logger log = LoggerFactory.getLogger(ProblemDAOImpl.class);
-    private static final String SELECT_FROM_PROBLEMS = "SELECT * FROM problems";
+    private static final String SELECT_FROM_PROBLEMS = "SELECT * FROM problems p LEFT JOIN solutions s on p.id = s.problem_id WHERE s.problem_id IS NULL";
     private static final String SELECT_FROM_PROBLEMS_BY_ID = "SELECT * FROM problems WHERE id = ?";
 
     private final Connection connection;
