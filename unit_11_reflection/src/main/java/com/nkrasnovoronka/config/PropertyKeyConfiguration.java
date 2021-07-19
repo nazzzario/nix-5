@@ -1,6 +1,6 @@
 package com.nkrasnovoronka.config;
 
-import com.nkrasnovoronka.annotation.PropertyKey;
+import com.nkrasnovoronka.annotation.PropertyMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,8 +21,8 @@ public class PropertyKeyConfiguration {
             Constructor<T> constructor = tClass.getConstructor();
             inst = constructor.newInstance();
             for(Field f: tClass.getDeclaredFields()){
-                if(f.isAnnotationPresent(PropertyKey.class)){
-                    PropertyKey annotation = f.getAnnotation(PropertyKey.class);
+                if(f.isAnnotationPresent(PropertyMapper.class)){
+                    PropertyMapper annotation = f.getAnnotation(PropertyMapper.class);
                     String property = properties.getProperty(annotation.value());
                     setFiled(inst, f, property);
                 }
