@@ -1,6 +1,6 @@
 package com.nkrasnovoronka.util;
 
-import com.nkrasnovoronka.config.PropertyKeyConfiguration;
+import com.nkrasnovoronka.config.PropertiesMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,13 +9,13 @@ import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.util.Properties;
 
-public class PropertyLoader {
-    private static final Logger log = LoggerFactory.getLogger(PropertyLoader.class);
+public class PropertiesLoader {
+    private static final Logger log = LoggerFactory.getLogger(PropertiesLoader.class);
 
-    public static Properties loadProperties(String propertiesUrl) {
+    public Properties loadProperties(String propertiesUrl) {
         Properties properties = new Properties();
         log.info("Reading properties");
-        try (InputStream input = PropertyKeyConfiguration.class.getResourceAsStream(propertiesUrl)) {
+        try (InputStream input = PropertiesMapper.class.getResourceAsStream(propertiesUrl)) {
             properties.load(input);
         } catch (IOException e) {
             log.error("Cannot read properties file");

@@ -1,25 +1,25 @@
 package com.nkrasnovoronka.model;
 
-import com.nkrasnovoronka.annotation.PropertyMapper;
+import com.nkrasnovoronka.annotation.PropertyKey;
 
 public class AppProperties {
 
-    @PropertyMapper("connections.limit")
+    @PropertyKey("connections.limit")
     private Integer connectionLimit;
 
-    @PropertyMapper("name")
+    @PropertyKey("name")
     private String name;
 
-    @PropertyMapper("url")
+    @PropertyKey("url")
     private String url;
 
-    @PropertyMapper("open")
+    @PropertyKey("open")
     private boolean open;
 
-    @PropertyMapper("password")
+    @PropertyKey("password")
     private String password;
 
-    @PropertyMapper("role")
+    @PropertyKey("role")
     private Role role;
 
     @Override

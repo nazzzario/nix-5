@@ -1,6 +1,6 @@
 package com.nkrasnovoronka.config;
 
-import com.nkrasnovoronka.annotation.PropertyMapper;
+import com.nkrasnovoronka.annotation.PropertyKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,21 +8,18 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.Properties;
 
-import static com.nkrasnovoronka.util.PropertyLoader.loadProperties;
-
-public class PropertyKeyConfiguration {
-    private static final Logger log = LoggerFactory.getLogger(PropertyKeyConfiguration.class);
+public class PropertiesMapper {
+    private static final Logger log = LoggerFactory.getLogger(PropertiesMapper.class);
 
 
-    public <T> T config(Class<T> tClass, String propertiesURL) {
-        Properties properties = loadProperties(propertiesURL);
+    public <T> T map(Class<T> tClass, Properties properties) {
         T inst;
         try {
             Constructor<T> constructor = tClass.getConstructor();
             inst = constructor.newInstance();
             for(Field f: tClass.getDeclaredFields()){
-                if(f.isAnnotationPresent(PropertyMapper.class)){
-                    PropertyMapper annotation = f.getAnnotation(PropertyMapper.class);
+                if(f.isAnnotationPresent(PropertyKey.class)){
+                    PropertyKey annotation = f.getAnnotation(PropertyKey.class);
                     String property = properties.getProperty(annotation.value());
                     setFiled(inst, f, property);
                 }
