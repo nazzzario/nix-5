@@ -1,15 +1,13 @@
-package com.nkrasnovoronka.config;
+package com.nkrasnovoronka.mapper;
 
-import com.nkrasnovoronka.annotation.CsvMapper;
 import com.nkrasnovoronka.parser.CSVData;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CsvMapperConfig {
+public class CsvMapper {
 
     public <T> List<T> createObjectFromCsv(Class<T> tClass, CSVData csvData) {
         List<T> objects = new ArrayList<>();
@@ -19,8 +17,8 @@ public class CsvMapperConfig {
             for (int i = 0; i < csvData.getRows(); i++) {
                 inst = constructor.newInstance();
                 for (Field f : tClass.getDeclaredFields()) {
-                    if (f.isAnnotationPresent(CsvMapper.class)) {
-                        CsvMapper annotation = f.getAnnotation(CsvMapper.class);
+                    if (f.isAnnotationPresent(com.nkrasnovoronka.annotation.CsvMapper.class)) {
+                        com.nkrasnovoronka.annotation.CsvMapper annotation = f.getAnnotation(com.nkrasnovoronka.annotation.CsvMapper.class);
                         String cell = csvData.getCell(i, annotation.value());
                         setFiled(inst, f, cell);
                     }

@@ -1,6 +1,6 @@
 package com.nkrasnovoronka;
 
-import com.nkrasnovoronka.config.PropertiesMapper;
+import com.nkrasnovoronka.mapper.PropertiesMapper;
 import com.nkrasnovoronka.model.AppProperties;
 import com.nkrasnovoronka.util.PropertiesLoader;
 

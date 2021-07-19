@@ -1,4 +1,4 @@
-package com.nkrasnovoronka.config;
+package com.nkrasnovoronka.mapper;
 
 import com.nkrasnovoronka.annotation.PropertyKey;
 import org.slf4j.Logger;

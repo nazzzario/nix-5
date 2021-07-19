@@ -1,6 +1,6 @@
 package com.nkrasnovoronka.util;
 
-import com.nkrasnovoronka.config.PropertiesMapper;
+import com.nkrasnovoronka.mapper.PropertiesMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
