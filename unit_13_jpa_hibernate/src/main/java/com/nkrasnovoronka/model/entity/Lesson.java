@@ -1,15 +1,19 @@
 package com.nkrasnovoronka.model.entity;
 
+import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
 @Table(name = "lessons")
+@Entity
+@Getter
 @Setter
+@ToString
 public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,21 +23,29 @@ public class Lesson {
     private String name;
 
     @Column(name = "date_time", nullable = false)
-    private LocalDate dateTime;
+    private LocalDateTime dateTime;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_id")
+    @ToString.Exclude
+    private Group group;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topic_id")
+    @ToString.Exclude
     private Topic topic;
 
     @OneToMany(mappedBy = "lesson")
-    private Set<Mark> marks;
+    @ToString.Exclude
+    private Set<Grade> grades;
+
 
     public Lesson() {
-        marks = new HashSet<>();
+        grades = new HashSet<>();
     }
 
-    public void addMarkToLesson(Mark mark){
-        marks.add(mark);
-        mark.setLesson(this);
+    public void addGrateToLesson(Grade grade){
+        grades.add(grade);
+        grade.setLesson(this);
     }
 }

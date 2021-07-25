@@ -1,47 +1,36 @@
 package com.nkrasnovoronka.model.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
+@Table(name = "courses")
 @Entity
-@Table(name = "corses")
+@Getter
+@Setter
+@ToString
 public class Course {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "course_name", nullable = false)
+    private String courseName;
 
-    @OneToMany(mappedBy = "course")
-    private Set<Group> groups;
-
-    @OneToMany(mappedBy = "course")
-    private Set<Topic> topics;
-
-    @OneToMany(mappedBy = "course")
-    private Set<Teacher> teachers;
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<Group> groups;
 
     public Course() {
-        groups = new HashSet<>();
-        topics = new HashSet<>();
-        teachers = new HashSet<>();
+        groups = new ArrayList<>();
     }
 
     public void addGroupToCourse(Group group){
         groups.add(group);
         group.setCourse(this);
-    }
-
-    public void addTopicToCourse(Topic topic){
-        topics.add(topic);
-        topic.setCourse(this);
-    }
-
-    public void addTeacherToCourse(Teacher teacher){
-        teachers.add(teacher);
-        teacher.setCourse(this);
     }
 }

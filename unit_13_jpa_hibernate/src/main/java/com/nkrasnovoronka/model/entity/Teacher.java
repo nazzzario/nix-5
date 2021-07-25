@@ -2,15 +2,17 @@ package com.nkrasnovoronka.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
 @Table(name = "teachers")
+@Entity
 @Getter
 @Setter
+@ToString
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,14 +24,11 @@ public class Teacher {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "email", unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id")
-    private Course course;
-
     @OneToMany(mappedBy = "teacher")
+    @ToString.Exclude
     private Set<Topic> topics;
 
     public Teacher() {

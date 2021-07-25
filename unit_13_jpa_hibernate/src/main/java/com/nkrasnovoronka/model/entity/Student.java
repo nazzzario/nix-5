@@ -2,17 +2,19 @@ package com.nkrasnovoronka.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-@Entity
 @Table(name = "students")
+@Entity
 @Getter
 @Setter
+@ToString
 public class Student {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,21 +25,24 @@ public class Student {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private Set<Grade> grades;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
+    @ToString.Exclude
     private Group group;
 
-    @OneToMany(mappedBy = "student")
-    private Set<Mark> marks;
-
     public Student() {
-        marks = new HashSet<>();
+        grades = new HashSet<>();
     }
 
-    public Student(Long id, String firstName, String lastName) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public void addGradeToStudent(Grade grade){
+        grades.add(grade);
+        grade.setStudent(this);
     }
-
 }
