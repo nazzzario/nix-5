@@ -1,4 +1,4 @@
-package com.nkrasnovoronka.entity;
+package com.nkrasnovoronka.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +22,10 @@ public class Group {
 
     @OneToMany(mappedBy = "group")
     private Set<Student> students;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    private Course course;
 
     public Group() {
         students = new HashSet<>();

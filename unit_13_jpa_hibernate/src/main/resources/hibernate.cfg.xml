@@ -13,8 +13,14 @@
         <property name="hibernate.hbm2ddl.auto">create</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
-        <mapping class="com.nkrasnovoronka.entity.Student"/>
-        <mapping class="com.nkrasnovoronka.entity.Group"/>
+        <mapping class="com.nkrasnovoronka.model.entity.Student"/>
+        <mapping class="com.nkrasnovoronka.model.entity.Group"/>
+        <mapping class="com.nkrasnovoronka.model.entity.Topic"/>
+        <mapping class="com.nkrasnovoronka.model.entity.Course"/>
+        <mapping class="com.nkrasnovoronka.model.entity.Teacher"/>
+        <mapping class="com.nkrasnovoronka.model.entity.Student"/>
+        <mapping class="com.nkrasnovoronka.model.entity.Lesson"/>
+        <mapping class="com.nkrasnovoronka.model.entity.Mark"/>
     </session-factory>
 
 </hibernate-configuration>

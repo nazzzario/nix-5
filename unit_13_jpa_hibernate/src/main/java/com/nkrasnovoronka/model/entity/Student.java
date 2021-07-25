@@ -1,16 +1,16 @@
-package com.nkrasnovoronka.entity;
+package com.nkrasnovoronka.model.entity;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "student")
+@Table(name = "students")
 @Getter
 @Setter
-@NoArgsConstructor
 public class Student {
 
     @Id
@@ -27,6 +27,12 @@ public class Student {
     @JoinColumn(name = "group_id")
     private Group group;
 
+    @OneToMany(mappedBy = "student")
+    private Set<Mark> marks;
+
+    public Student() {
+        marks = new HashSet<>();
+    }
 
     public Student(Long id, String firstName, String lastName) {
         this.id = id;
