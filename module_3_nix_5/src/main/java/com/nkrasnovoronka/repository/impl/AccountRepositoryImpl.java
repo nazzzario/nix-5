@@ -3,8 +3,8 @@ package com.nkrasnovoronka.repository.impl;
 import com.nkrasnovoronka.entity.Account;
 import com.nkrasnovoronka.repository.AccountRepository;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
-import javax.persistence.Query;
 import java.util.List;
 
 public class AccountRepositoryImpl implements AccountRepository {
@@ -16,7 +16,8 @@ public class AccountRepositoryImpl implements AccountRepository {
 
     @Override
     public List<Account> getAllByUserId(Long userId) {
-        Query query = session.createQuery("select a from Account a");
-        return (List<Account>) query.getResultList();
+        Query<Account> query = session.createQuery("select a from Account a where a.user.id = :userId");
+        query.setParameter("userId", userId);
+        return query.getResultList();
     }
 }

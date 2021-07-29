@@ -23,7 +23,7 @@ public class Transaction extends BaseEntity {
     @Column(nullable = false,columnDefinition = "TIMESTAMP")
     private Instant date;
 
-    @Column(name = "tramsaction_amount")
+    @Column(name = "transaction_amount")
     private Double transactionAmount;
 
 

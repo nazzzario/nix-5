@@ -3,8 +3,7 @@ package com.nkrasnovoronka.repository.impl;
 import com.nkrasnovoronka.entity.User;
 import com.nkrasnovoronka.repository.UserRepository;
 import org.hibernate.Session;
-
-import javax.persistence.Query;
+import org.hibernate.query.Query;
 
 public class UserRepositoryImpl implements UserRepository {
 
@@ -16,8 +15,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User getUserById(Long userId) {
-        Query query = session.createQuery("select u from User u where u.id = :id");
+        Query<User> query = session.createQuery("select u from User u where u.id = :id");
         query.setParameter("id", userId);
-        return (User) query.getSingleResult();
+        return query.getSingleResult();
     }
 }
