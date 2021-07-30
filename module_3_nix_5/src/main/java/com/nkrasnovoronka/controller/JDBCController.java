@@ -15,7 +15,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class JDBCController {
-    private static final Logger logger = LoggerFactory.getLogger(JDBCController.class);
+    private static final Logger loggerInfo = LoggerFactory.getLogger("info");
+    private static final Logger loggerWarn = LoggerFactory.getLogger("warn");
+    private static final Logger loggerError = LoggerFactory.getLogger("error");
+
     private final JDBCTransactionService service;
     private final String userEmail;
 
@@ -25,6 +28,7 @@ public class JDBCController {
     }
 
     public void run(BufferedReader reader) {
+        loggerInfo.info("Starting creating report file");
         try {
             List<Account> accounts = service.getAccountsByUserEmail(userEmail);
             accounts.stream().forEach(a -> System.out.format("%s:id -> %s:name%n", a.getId(), a.getAccountName()));
@@ -44,7 +48,7 @@ public class JDBCController {
 
             System.out.println("Report generated successfully in " + fileName);
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            loggerError.error("Cannot create report file");
             System.out.println(e.getMessage());
         }
     }

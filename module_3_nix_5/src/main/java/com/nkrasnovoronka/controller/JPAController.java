@@ -12,7 +12,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class JPAController {
-    private static final Logger logger = LoggerFactory.getLogger(JPAController.class);
+    private static final Logger loggerInfo = LoggerFactory.getLogger("info");
+    private static final Logger loggerWarn = LoggerFactory.getLogger("warn");
+    private static final Logger loggerError = LoggerFactory.getLogger("error");
+
     private final Session session;
     private final String email;
     private final JPATransactionService service;
@@ -24,7 +27,7 @@ public class JPAController {
     }
 
     public void run(BufferedReader reader) {
-
+        loggerInfo.info("Creating new transactions and writing to db");
         try {
             User currentUser = service.findUserByEmail(email);
             List<Account> accounts = service.findAccountsOfUser(currentUser.getId());
@@ -55,7 +58,7 @@ public class JPAController {
 
             service.addTransaction(account, transaction, value, categoryId);
         } catch (Exception e) {
-            logger.error("Error transaction failed", e);
+            loggerError.error("Transaction failed", e);
             throw new RuntimeException(e);
         }
     }

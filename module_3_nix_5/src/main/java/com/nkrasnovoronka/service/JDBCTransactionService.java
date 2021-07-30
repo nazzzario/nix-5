@@ -2,6 +2,8 @@ package com.nkrasnovoronka.service;
 
 import com.nkrasnovoronka.model.entity.Account;
 import com.nkrasnovoronka.model.entity.dto.TransactionDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JDBCTransactionService {
+    private static final Logger loggerInfo = LoggerFactory.getLogger("info");
+    private static final Logger loggerWarn = LoggerFactory.getLogger("warn");
+    private static final Logger loggerError = LoggerFactory.getLogger("error");
+
     public static final String GET_TRANSACTIONS = "select t.id, t.date, t.value, c.category_type, a.account_name " +
             "from transactions t " +
             "join categories c on t.category_id = c.id " +
@@ -18,6 +24,7 @@ public class JDBCTransactionService {
             "where a.id = ? and " +
             "t.date between ? and ? " +
             "order by c.category_type, t.value";
+
     public static final String GET_ACCOUNTS = "select a.id,a.account_name,a.balance from public.accounts a " +
             "join public.users on public.users.id=a.user_id " +
             "where public.users.email = ?";
@@ -28,6 +35,7 @@ public class JDBCTransactionService {
     }
 
     public List<TransactionDTO> getTransactions(Long accountId, Timestamp from, Timestamp to) {
+        loggerInfo.info("Getting all transactions by {}", accountId);
         try (PreparedStatement getValue = connection.prepareStatement(GET_TRANSACTIONS)) {
             getValue.setLong(1, accountId);
             getValue.setTimestamp(2, from);
@@ -47,13 +55,14 @@ public class JDBCTransactionService {
             }
             return transactions;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            loggerError.error("Cannot get transactions from db", e);
             throw new RuntimeException("Transactions cann`t be exported", e);
         }
     }
 
 
     public List<Account> getAccountsByUserEmail(String userEmail) {
+        loggerInfo.info("Getting user by email {}", userEmail);
         List<Account> accounts = new ArrayList<>();
         try (PreparedStatement getValue = connection.prepareStatement(GET_ACCOUNTS)) {
             getValue.setString(1, userEmail);
@@ -67,6 +76,7 @@ public class JDBCTransactionService {
             }
             return accounts;
         } catch (Exception e) {
+            loggerError.error("Cannot get user with email {}", userEmail);
             throw new RuntimeException(e);
         }
     }
