@@ -37,7 +37,10 @@ public class Account extends BaseEntity {
     public Account() {
         transactions = new ArrayList<>();
     }
-    public void addTransactionToAccount(Transaction transaction){
+
+    public void addTransactionToAccount(Transaction transaction) {
+        transactions.add(transaction);
+        transaction.setAccount(this);
     }
 }
 

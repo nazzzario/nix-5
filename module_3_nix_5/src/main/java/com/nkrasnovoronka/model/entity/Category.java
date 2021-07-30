@@ -2,9 +2,9 @@ package com.nkrasnovoronka.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.DiscriminatorFormula;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,5 +18,14 @@ public class Category extends BaseEntity {
     private String name;
 
     @OneToMany(mappedBy = "category")
-    private List<Transaction> transaction;
+    private List<Transaction> transactions;
+
+    public Category() {
+        transactions = new ArrayList<>();
+    }
+
+    public void addTransactionToCategory(Transaction transaction) {
+        transactions.add(transaction);
+        transaction.setCategory(this);
+    }
 }

@@ -1,6 +1,5 @@
 package com.nkrasnovoronka.util;
 
-import com.nkrasnovoronka.model.entity.Account;
 import com.nkrasnovoronka.model.entity.ExpenseCategory;
 import com.nkrasnovoronka.model.entity.IncomeCategory;
 
@@ -17,7 +16,7 @@ import java.util.List;
 
 public final class Util {
 
-    public static  void expenseTable(List<ExpenseCategory> categories) {
+    public static void expenseTable(List<ExpenseCategory> categories) {
         List<String[]> table = new ArrayList<>();
         table.add(new String[]{"id", "expense"});
         for (ExpenseCategory c : categories) {
@@ -45,7 +44,7 @@ public final class Util {
         }
     }
 
-    public  static long readLong(BufferedReader reader) throws IOException {
+    public static long readLong(BufferedReader reader) throws IOException {
         while (true) {
             String text = reader.readLine();
             try {

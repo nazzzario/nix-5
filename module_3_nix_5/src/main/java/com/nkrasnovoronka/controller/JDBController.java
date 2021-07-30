@@ -11,44 +11,38 @@ import org.slf4j.LoggerFactory;
 import java.io.BufferedReader;
 import java.sql.Connection;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class JDBController {
-    private static final  Logger logger = LoggerFactory.getLogger(JDBController.class);
+    private static final Logger logger = LoggerFactory.getLogger(JDBController.class);
     private final JDBCTransactionService service;
     private final String userEmail;
-    private final String fileToExport;
-    private final CSVTransactionWriter writer = new CSVTransactionWriter();
 
-    public JDBController(Connection connection, String email, String fileToExport) {
+    public JDBController(Connection connection, String email) {
         this.service = new JDBCTransactionService(connection);
         this.userEmail = email;
-        this.fileToExport = fileToExport;
     }
 
     public void run(BufferedReader reader) {
         try {
-            List<Account> availableAccounts = service.getAccountsByUserEmail(userEmail);
-            List<Long> availableAccountsIds = new ArrayList<>();
-            for (Account a : availableAccounts) {
-                availableAccountsIds.add(a.getId());
-            }
-            System.out.println("Enter the id of account: ");
-            long id = Util.chooseAccount(reader, availableAccountsIds);
-            System.out.println("Enter first date to check transactions history\nDate format: d/m/yy");
+            List<Account> accounts = service.getAccountsByUserEmail(userEmail);
+            accounts.stream().forEach(a -> System.out.format("%s:id -> %s:name%n", a.getId(), a.getAccountName()));
+
+            System.out.println("Please choose account");
+            long accountId = Util.chooseAccount(reader, accounts.stream().map(Account::getId).collect(Collectors.toList()));
+
+            System.out.println("Pleas enter begin date (d/m/yy)");
             Timestamp from = Util.readDate(reader);
-            System.out.println("If you want to current date, press 1, or press 0 to enter your date");
-            Timestamp to;
-            if (reader.readLine().equals("1"))
-                to = new Timestamp(System.currentTimeMillis());
-            else {
-                System.out.println("To date: ");
-                to = Util.readDate(reader);
-            }
-            List<TransactionDTO> list = service.findTransaction(id, from, to);
-            writer.exportReport(fileToExport, list, service.getIncomesAndBalanceForPeriod(list));
-            System.out.println("History was saved to file operations.csv");
+            System.out.println("Pleas enter end date (d/m/yy)");
+            Timestamp to = Util.readDate(reader);
+            List<TransactionDTO> list = service.getTransactions(accountId, from, to);
+            String fileName = "report_" + from.toString() + "_" + to.toString() + ".csv";
+
+            CSVTransactionWriter csvTransactionWriter = new CSVTransactionWriter(fileName);
+            csvTransactionWriter.createReport(list);
+
+            System.out.println("Report generated successfully in " + fileName);
         } catch (Exception e) {
             logger.error(e.getMessage());
             System.out.println(e.getMessage());

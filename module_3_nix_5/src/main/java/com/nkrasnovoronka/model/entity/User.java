@@ -26,4 +26,9 @@ public class User {
     public User() {
         accounts = new ArrayList<>();
     }
+
+    public void addAccountToUser(Account account) {
+        accounts.add(account);
+        account.setUser(this);
+    }
 }
