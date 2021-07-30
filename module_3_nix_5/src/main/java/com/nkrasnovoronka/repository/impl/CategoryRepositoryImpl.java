@@ -1,9 +1,7 @@
 package com.nkrasnovoronka.repository.impl;
 
-import com.nkrasnovoronka.entity.Category;
-import com.nkrasnovoronka.entity.ExpenseCategory;
-import com.nkrasnovoronka.entity.IncomeCategory;
-import com.nkrasnovoronka.exception.InvalidCategoryException;
+import com.nkrasnovoronka.model.entity.ExpenseCategory;
+import com.nkrasnovoronka.model.entity.IncomeCategory;
 import com.nkrasnovoronka.repository.CategoryRepository;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -12,25 +10,45 @@ import java.util.List;
 
 public class CategoryRepositoryImpl implements CategoryRepository {
 
-    private Session session;
+    private final Session session;
 
     public CategoryRepositoryImpl(Session session) {
         this.session = session;
     }
 
     @Override
-    public List<Category> getCategoryByType(String type) {
-        Query<Category> query = session.createQuery("select c from Category c where type(c.class) = :type");
-        switch (type) {
-            case "income":
-                query.setParameter("type", IncomeCategory.class);
-                break;
-            case "expense":
-                query.setParameter("type", ExpenseCategory.class);
-                break;
-            default:
-                throw new InvalidCategoryException("Category with name " + type + " doesn't exists");
+    public List<IncomeCategory> getIncomeCategories() {
+        try {
+            Query<IncomeCategory> query = session.createQuery("select c from Category c where type(c) = IncomeCategory", IncomeCategory.class);
+            List<IncomeCategory> resultList = query.getResultList();
+            return resultList;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        return query.getResultList();
+    }
+
+    @Override
+    public List<ExpenseCategory> getExpenseCategories() {
+        try {
+            Query<ExpenseCategory> query = session.createQuery("select c from Category c where type(c) = ExpenseCategory ", ExpenseCategory.class);
+            List<ExpenseCategory> resultList = query.getResultList();
+            return resultList;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public IncomeCategory getIncomeCategoryId(Long id) {
+        Query<IncomeCategory> query = session.createQuery("select c from Category c where type(c) = IncomeCategory and c.id = :id", IncomeCategory.class);
+        query.setParameter("id", id);
+        return query.getResultStream().findFirst().orElseThrow(() -> new RuntimeException());
+    }
+
+    @Override
+    public ExpenseCategory getExpenseCategoryById(Long id) {
+        Query<ExpenseCategory> query = session.createQuery("select c from Category c where type(c) = ExpenseCategory and c.id = :id", ExpenseCategory.class);
+        query.setParameter("id", id);
+        return query.getResultStream().findFirst().orElseThrow(() -> new RuntimeException());
     }
 }

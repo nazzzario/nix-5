@@ -13,12 +13,11 @@
         <property name="hibernate.hbm2ddl.auto">create</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
-        <mapping class="com.nkrasnovoronka.entity.Account"/>
-        <mapping class="com.nkrasnovoronka.entity.User"/>
-        <mapping class="com.nkrasnovoronka.entity.Transaction"/>
-        <mapping class="com.nkrasnovoronka.entity.Category"/>
-        <mapping class="com.nkrasnovoronka.entity.IncomeCategory"/>
-        <mapping class="com.nkrasnovoronka.entity.ExpenseCategory"/>
+        <mapping class="com.nkrasnovoronka.model.entity.Account"/>
+        <mapping class="com.nkrasnovoronka.model.entity.Category"/>
+        <mapping class="com.nkrasnovoronka.model.entity.ExpenseCategory"/>
+        <mapping class="com.nkrasnovoronka.model.entity.IncomeCategory"/>
+        <mapping class="com.nkrasnovoronka.model.entity.Transaction"/>
+        <mapping class="com.nkrasnovoronka.model.entity.User"/>
     </session-factory>
-
 </hibernate-configuration>

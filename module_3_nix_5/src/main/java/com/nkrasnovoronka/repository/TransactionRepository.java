@@ -1,10 +1,8 @@
 package com.nkrasnovoronka.repository;
 
-import com.nkrasnovoronka.entity.Account;
-import com.nkrasnovoronka.entity.Transaction;
+import com.nkrasnovoronka.model.entity.Transaction;
+
 
 public interface TransactionRepository {
-    void addTransaction(Account account, Transaction transaction);
-
-
+    void save(Transaction transaction);
 }

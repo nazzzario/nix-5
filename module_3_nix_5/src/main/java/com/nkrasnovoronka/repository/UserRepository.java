@@ -1,7 +1,12 @@
 package com.nkrasnovoronka.repository;
 
-import com.nkrasnovoronka.entity.User;
+import com.nkrasnovoronka.model.entity.Account;
+import com.nkrasnovoronka.model.entity.User;
+
+import java.util.List;
 
 public interface UserRepository {
-    User getUserById(Long userId);
+    User getUserByEmail(String email);
+
+    List<Account> getAccountsOfUser(Long id);
 }

@@ -1,9 +1,16 @@
 package com.nkrasnovoronka.repository;
 
-import com.nkrasnovoronka.entity.Category;
+import com.nkrasnovoronka.model.entity.ExpenseCategory;
+import com.nkrasnovoronka.model.entity.IncomeCategory;
 
 import java.util.List;
 
 public interface CategoryRepository {
-    List<Category> getCategoryByType(String type);
+    List<IncomeCategory> getIncomeCategories();
+
+    List<ExpenseCategory> getExpenseCategories();
+
+    IncomeCategory getIncomeCategoryId(Long id);
+
+    ExpenseCategory getExpenseCategoryById(Long id);
 }
