@@ -14,12 +14,12 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class JDBController {
-    private static final Logger logger = LoggerFactory.getLogger(JDBController.class);
+public class JDBCController {
+    private static final Logger logger = LoggerFactory.getLogger(JDBCController.class);
     private final JDBCTransactionService service;
     private final String userEmail;
 
-    public JDBController(Connection connection, String email) {
+    public JDBCController(Connection connection, String email) {
         this.service = new JDBCTransactionService(connection);
         this.userEmail = email;
     }

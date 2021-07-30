@@ -1,6 +1,6 @@
 package com.nkrasnovoronka;
 
-import com.nkrasnovoronka.controller.JDBController;
+import com.nkrasnovoronka.controller.JDBCController;
 import com.nkrasnovoronka.controller.JPAController;
 import com.nkrasnovoronka.util.HibernateSessionFactory;
 import org.hibernate.Session;
@@ -41,7 +41,7 @@ public class Main {
         String url = props.getProperty("url");
         try (Connection connection = DriverManager.getConnection(url, arguments.get("login"), arguments.get("password"));
              BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in))) {
-            JDBController secondVariant = new JDBController(connection, arguments.get("email"));
+            JDBCController secondVariant = new JDBCController(connection, arguments.get("email"));
             secondVariant.run(bufferedReader);
         } catch (Exception e) {
             logger.error(e.getMessage());
