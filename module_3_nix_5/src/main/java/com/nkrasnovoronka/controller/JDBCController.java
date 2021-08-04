@@ -31,7 +31,7 @@ public class JDBCController {
         loggerInfo.info("Starting creating report file");
         try {
             List<Account> accounts = service.getAccountsByUserEmail(userEmail);
-            accounts.stream().forEach(a -> System.out.format("%s:id -> %s:name%n", a.getId(), a.getAccountName()));
+            accounts.forEach(a -> System.out.format("%s:id -> %s:name%n", a.getId(), a.getAccountName()));
 
             System.out.println("Please choose account");
             long accountId = Util.chooseAccount(reader, accounts.stream().map(Account::getId).collect(Collectors.toList()));

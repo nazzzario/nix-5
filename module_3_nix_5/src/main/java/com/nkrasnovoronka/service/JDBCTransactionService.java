@@ -13,10 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JDBCTransactionService {
-    private static final Logger loggerInfo = LoggerFactory.getLogger("info");
-    private static final Logger loggerWarn = LoggerFactory.getLogger("warn");
-    private static final Logger loggerError = LoggerFactory.getLogger("error");
-
     public static final String GET_TRANSACTIONS = "select t.id, t.date, t.value, c.category_type, a.account_name " +
             "from transactions t " +
             "join categories c on t.category_id = c.id " +
@@ -24,10 +20,12 @@ public class JDBCTransactionService {
             "where a.id = ? and " +
             "t.date between ? and ? " +
             "order by c.category_type, t.value";
-
     public static final String GET_ACCOUNTS = "select a.id,a.account_name,a.balance from public.accounts a " +
             "join public.users on public.users.id=a.user_id " +
             "where public.users.email = ?";
+    private static final Logger loggerInfo = LoggerFactory.getLogger("info");
+    private static final Logger loggerWarn = LoggerFactory.getLogger("warn");
+    private static final Logger loggerError = LoggerFactory.getLogger("error");
     private final Connection connection;
 
     public JDBCTransactionService(Connection connection) {

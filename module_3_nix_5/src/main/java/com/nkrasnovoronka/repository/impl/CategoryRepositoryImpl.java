@@ -41,13 +41,13 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     public IncomeCategory getIncomeCategoryId(Long id) {
         Query<IncomeCategory> query = session.createQuery("select c from Category c where type(c) = IncomeCategory and c.id = :id");
         query.setParameter("id", id);
-        return query.getResultStream().findFirst().orElseThrow(() -> new RuntimeException());
+        return query.getResultStream().findFirst().orElseThrow(RuntimeException::new);
     }
 
     @Override
     public ExpenseCategory getExpenseCategoryById(Long id) {
         Query<ExpenseCategory> query = session.createQuery("select c from Category c where type(c) = ExpenseCategory and c.id = :id");
         query.setParameter("id", id);
-        return query.getResultStream().findFirst().orElseThrow(() -> new RuntimeException());
+        return query.getResultStream().findFirst().orElseThrow(RuntimeException::new);
     }
 }

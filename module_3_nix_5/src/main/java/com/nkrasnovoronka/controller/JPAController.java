@@ -31,7 +31,7 @@ public class JPAController {
         try {
             User currentUser = service.findUserByEmail(email);
             List<Account> accounts = service.findAccountsOfUser(currentUser.getId());
-            accounts.stream().forEach(a -> System.out.format("%s:id -> %s:name%n", a.getId(), a.getAccountName()));
+            accounts.forEach(a -> System.out.format("%s:id -> %s:name%n", a.getId(), a.getAccountName()));
 
             System.out.println("Pleas choose account");
             long accountId = Util.chooseAccount(reader, accounts.stream().map(Account::getId).collect(Collectors.toList()));
@@ -42,7 +42,7 @@ public class JPAController {
             transaction.setAccount(account);
 
             System.out.println("Pleas enter transaction value (positive or negative number)");
-            Long value = Long.parseLong(reader.readLine());
+            long value = Long.parseLong(reader.readLine());
 
             List<ExpenseCategory> expenseCategories = service.getExpenseCategories();
             List<IncomeCategory> incomeCategories = service.getIncomeCategories();

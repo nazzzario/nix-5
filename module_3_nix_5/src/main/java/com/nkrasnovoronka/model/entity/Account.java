@@ -27,15 +27,15 @@ public class Account extends BaseEntity {
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Transaction> transactions;
 
+    public Account() {
+        transactions = new ArrayList<>();
+    }
+
     @PrePersist
     public void onCreate() {
         if (balance == null) {
             balance = 0L;
         }
-    }
-
-    public Account() {
-        transactions = new ArrayList<>();
     }
 
     public void addTransactionToAccount(Transaction transaction) {
