@@ -42,5 +42,9 @@ public class Race {
     public AtomicInteger getPosition() {
         return position;
     }
+
+    public Set<Horse> getHorses() {
+        return horses;
+    }
 }
 

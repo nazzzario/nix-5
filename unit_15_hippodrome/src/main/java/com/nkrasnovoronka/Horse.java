@@ -2,14 +2,14 @@ package com.nkrasnovoronka;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import static com.nkrasnovoronka.tasks.other.race.HorseConstants.*;
+import static com.nkrasnovoronka.HorseConstants.*;
 
 public class Horse implements Runnable {
 
     private final String name;
-    private final com.nkrasnovoronka.tasks.other.race.Race race;
+    private final Race race;
 
-    public Horse(String name, com.nkrasnovoronka.tasks.other.race.Race race) {
+    public Horse(String name, Race race) {
         this.name = name;
         this.race = race;
     }
@@ -39,6 +39,10 @@ public class Horse implements Runnable {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
