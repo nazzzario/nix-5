@@ -6,8 +6,6 @@ import java.util.Map;
 
 public class HippodromeController {
     public static void main(String[] args) {
-
-
         Race race = new Race();
         race.registerHorseToRace(new Horse("First", race));
         race.registerHorseToRace(new Horse("Second", race));
@@ -24,7 +22,7 @@ public class HippodromeController {
         String userInputString = UserInput.userInputString("Pleas enter horse name");
         race.startRace();
         Map<Integer, Horse> finishPosition = race.getFinishPosition();
-        if(userInputString.equals(finishPosition.get(1))){
+        if(userInputString.equals(finishPosition.get(1).getName())){
             System.out.println("Congratulations your horse win");
         }else {
             Map.Entry<Integer, Horse> integerHorseEntry1 = finishPosition.entrySet().stream()

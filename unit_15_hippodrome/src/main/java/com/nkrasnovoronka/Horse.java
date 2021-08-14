@@ -1,5 +1,6 @@
 package com.nkrasnovoronka;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static com.nkrasnovoronka.HorseConstants.*;
@@ -8,6 +9,7 @@ public class Horse implements Runnable {
 
     private final String name;
     private final Race race;
+    private CountDownLatch countDownLatch;
 
     public Horse(String name, Race race) {
         this.name = name;
@@ -24,6 +26,7 @@ public class Horse implements Runnable {
             sleep();
         }
         race.getFinishPosition().put(race.getPosition().getAndIncrement(), this);
+        countDownLatch.countDown();
     }
 
     private int move(int currentDistance){
@@ -43,6 +46,10 @@ public class Horse implements Runnable {
 
     public String getName() {
         return name;
+    }
+
+    public void setCountDownLatch(CountDownLatch countDownLatch) {
+        this.countDownLatch = countDownLatch;
     }
 
     @Override

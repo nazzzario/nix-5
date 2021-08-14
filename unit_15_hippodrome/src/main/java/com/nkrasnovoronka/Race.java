@@ -1,7 +1,10 @@
 package com.nkrasnovoronka;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Race {
@@ -20,19 +23,18 @@ public class Race {
     }
 
     public synchronized void startRace(){
-        ExecutorService service = Executors.newFixedThreadPool(horses.size());
-        List<Future<?>> futures = new ArrayList<>();
+        System.out.println("Starting race");
+        CountDownLatch countDownLatch = new CountDownLatch(horses.size());
         for(Horse h: horses){
-            futures.add(service.submit(h));
+            h.setCountDownLatch(countDownLatch);
+            new Thread(h).start();
         }
-        for(Future<?> f: futures){
-            try {
-                f.get();
-            } catch (InterruptedException | ExecutionException e) {
-                Thread.currentThread().interrupt();
-            }
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+           Thread.currentThread().interrupt();
         }
-        service.shutdown();
+        System.out.println("Race finished");
     }
 
     public Map<Integer, Horse> getFinishPosition() {
